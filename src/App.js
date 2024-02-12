@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { PrivateRoute, AuthRoute } from "./auth";
+import SidebarMenu from "./components/layouts/Sidebar";
+import TestPage from "./pages/TestPage";
+import Login from "./pages/LoginPage";
+import TestPage2 from "./pages/TestPage2";
+import TestPage3 from "./pages/TestPage3";
+import Register from "./pages/RegisterPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<PrivateRoute />}>
+        <Route path="" element={<SidebarMenu />}>
+          <Route path="/test" element={<TestPage />} />
+          <Route path="/test1" element={<TestPage2 />} />
+          <Route path="/test2" element={<TestPage3 />} />
+        </Route>
+      </Route>
+      <Route element={<AuthRoute />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
+      <Route path="*" element={<h1>Not Found</h1>} />
+    </Routes>
   );
 }
 
